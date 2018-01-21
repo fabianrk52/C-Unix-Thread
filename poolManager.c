@@ -27,7 +27,7 @@ poolManager createPool(int num_of_threads){
             exit(1);
         }
         addtoList(manager->threads, (void*) thread);
-        printf("Thread #%d was created", i + 1);
+        printf("Thread #%d was created\n", i + 1);
     }
     return manager;
 }
@@ -39,9 +39,9 @@ void* thread_func(void* args){
     Queue tasks_queue = manager->tasks_queue;
     while (!0){
         task = (Task) dequeue(tasks_queue);
-        printf("Thread %u took task %p", pthread_self(), task);
+        printf("Thread %u took task %p\n", pthread_self(), task);
         task->f(task->args);
-        printf("Thread %u finished task %p", pthread_self(), task);
+        printf("Thread %u finished task %p\n", pthread_self(), task);
 
     }
 }

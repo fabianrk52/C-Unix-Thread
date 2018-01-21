@@ -54,17 +54,16 @@ int main(int argc, const char * argv[]) {
     int reminder_iterations = ceil(num_iterations % num_tasks);
 
     tasks = createList();
-    printf("a\n");
     manager = createPool(num_threads);
-    printf("Thread pool manager was created with %d threads", num_threads);
+    printf("Thread pool manager was created with %d threads\n", num_threads);
     feeder = create_task_feeder(manager);
-    printf("Task feeder was created");
+    printf("Task feeder was created\n");
     printf("a");
     for (i = 0; i < num_tasks; i++) {
         int iterations = iterations_per_task + (i == num_tasks - 1 ? reminder_iterations : 0);
         task_args = create_task_args(iterations);
         task = create_task(&monte_carlo_func, (void*) task_args);
-        printf("Task #%d (id: %p) was created with %d iterations", i + 1, task, iterations);
+        printf("Task #%d (id: %p) was created with %d iterations\n", i + 1, task, iterations);
         addtoList(tasks, (void*) task);
         feeder_load_task(feeder, task);
     }
@@ -75,9 +74,9 @@ int main(int argc, const char * argv[]) {
 
 
     manager_stop_all_threads(manager);
-    printf("Stopped all threads");
+    printf("Stopped all threads\n");
 
-    printf("PI estimation result is = %lf", estimate_pi(tasks));
+    printf("PI estimation result is = %lf\n", estimate_pi(tasks));
 
     return 0;
 }

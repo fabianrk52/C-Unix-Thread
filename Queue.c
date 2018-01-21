@@ -20,7 +20,6 @@ Queue create_queue() {
 
 void enqueue(Queue queue, void* data) {
     pthread_mutex_lock(&queue->mutex);
-    //log_debug("Thread %u granted the mutex to enqueue %p", pthread_self(), data);
     Item item = create_item(data);
     if (queue->tail == NULL) {
         queue->head = queue->tail = item;
@@ -29,29 +28,26 @@ void enqueue(Queue queue, void* data) {
         queue->tail = item;
     }
     queue->count++;
-    //log_debug("Thread %u enqueued %p (queue size: %d), signaling cond...", pthread_self(), data, queue->count);
     pthread_cond_signal(&queue->cond);
-    log_debug("Thread %u enqueued %p (queue size: %d), releasing mutex...", pthread_self(), data, queue->count);
     pthread_mutex_unlock(&queue->mutex);
 }
 
 void* dequeue(Queue queue) {
     pthread_mutex_lock(&queue->mutex);
     //log_debug("Thread %u granted the mutex to dequeue", pthread_self());
-    while (queue->count!=0) {
-        log_debug("Thread %u : queue is empty, waiting...", pthread_self());
+    while (queue_is_empty(queue)){
         pthread_cond_wait(&queue->cond, &queue->mutex);
     }
-    //log_debug("Thread %u : queue is not empty", pthread_self());
     void* data = queue->head->data;
     queue->head = queue->head->next;
     queue->count--;
     if (queue->count == 0) {
         queue->head = queue->tail = NULL;
     }
-    //log_debug("Thread %u dequeued %p (queue size: %d), releasing mutex...", pthread_self(), data, queue->count);
     pthread_mutex_unlock(&queue->mutex);
     return data;
 }
 
-
+int queue_is_empty(Queue queue) {
+    return queue->count == 0;
+}

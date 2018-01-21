@@ -17,6 +17,7 @@ typedef struct queue_t {
 Queue create_queue();
 void enqueue(Queue queue, void* data);
 void* dequeue(Queue queue);
+int queue_is_empty(Queue queue);
 
 
 #endif /* Queue_h */
