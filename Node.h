@@ -11,4 +11,4 @@ typedef struct node_t{
 
 Node create_node(void* data, Node next);
 
-#endif /* Node_h */
+#endif

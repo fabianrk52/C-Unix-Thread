@@ -1,19 +1,8 @@
-//
-//  List.c
-//  unix2
-//
-//  Created by Fabian Roitman on 11/01/2018.
-//  Copyright © 2018 Fabian. All rights reserved.
-//
-
 #include "List.h"
 
 
 List createList(){
-    printf("list");
-    List n_list=(List)malloc(sizeof(List));
-    if(n_list==NULL)
-        perror("create list memory allocation");
+    List n_list=(List)malloc(sizeof(struct list_t));
     n_list->next=NULL;
     n_list->prev=NULL;
     n_list->count=0;

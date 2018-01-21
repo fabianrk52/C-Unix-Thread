@@ -7,20 +7,26 @@
 //
 
 #include "poolManager.h"
-#include "Task.h"
 
 
-poolManager createPool(int num_of_threads){
-    poolManager manager = (poolManager)malloc(sizeof(struct thread_pool_manager_t));
+
+poolManager createPool(int num_of_threads){  
+     
+    poolManager manager = (poolManager)malloc(sizeof(struct pool_manager_t));
+    if(manager==NULL){
+        perror("error: createPool()");
+    }
     manager->tasks_queue=create_queue();
+    printf("queue");
     manager->threads=createList();
-    for(int i=num_of_threads;i>0;i--){
-        pthread_t* thread=(pthread_t*)malloc(sizeof(pthread_t)); /*pthread_t = type for thread*/
-        if(pthread_create(thread, NULL, thread_func, (void*)manager)){
-            printf("pthread_create");
+    printf("crelist");
+    for (int i = 0; i < num_of_threads; i++) {
+        pthread_t* thread = (pthread_t*) malloc(sizeof (pthread_t));
+        if (pthread_create(thread, NULL, thread_func, (void*) manager)){
+            perror("pthread_create failed");
             exit(1);
         }
-        addtoList(manager->threads, (void*)thread);
+        addtoList(manager->threads, (void*) thread);
         printf("Thread #%d was created", i + 1);
     }
     return manager;

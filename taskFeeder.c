@@ -1,6 +1,6 @@
 #include "taskFeeder.h"
 
-TaskFeeder create_task_feeder(poolManager manager) {
+TaskFeeder create_task_feeder(struct pool_manager_t *manager) {
     TaskFeeder feeder = (TaskFeeder) malloc(sizeof (struct taskfeeder));
     feeder->manager = manager;
     return feeder;

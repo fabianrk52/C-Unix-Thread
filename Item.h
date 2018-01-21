@@ -12,4 +12,4 @@ typedef struct item_t {
 Item create_item(void* data);
 
 
-#endif /* Item_h */
+#endif

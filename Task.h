@@ -1,17 +1,16 @@
-#ifndef Task_h
-#define Task_h
+#ifndef TASK_H
+#define TASK_H
 
-#include <stdio.h>
 #include <stdlib.h>
-#include "Item.h"
+#include "taskArgs.h"
+#include "Node.h"
+#include "List.h"
 
 typedef struct task_t {
     void (*f)(void*);
     void* args;
 } * Task;
 
+Task create_task(void (*f)(void*), void* args);
 
-Item create_item(void* data);
-
-
-#endif /* Item_h */
+#endif

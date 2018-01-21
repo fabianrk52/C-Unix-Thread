@@ -3,14 +3,19 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
+#include <math.h>
+#include <string.h>
+#include <pthread.h>
 #include "List.h"
 #include "Queue.h"
+#include "taskFeeder.h"
 
 
-typedef struct thread_pool_manager_t {
+typedef struct pool_manager_t {
     Queue tasks_queue;
     List threads;
-}*poolManager;
+} * poolManager;
 
 poolManager createPool(int num_of_threads);
 void* thread_func(void* args);
